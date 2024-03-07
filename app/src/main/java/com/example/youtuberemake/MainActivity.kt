@@ -2,6 +2,8 @@ package com.example.youtuberemake
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtuberemake.databinding.ActivityMainBinding
 import com.google.gson.GsonBuilder
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = ""
+
         val videos = mutableListOf<Video>()
         videoAdapter = VideoAdapter(videos) { video ->
 
@@ -36,7 +41,8 @@ class MainActivity : AppCompatActivity() {
                     videos.clear()
                     videos.addAll(listVideo.data)
                     videoAdapter.notifyDataSetChanged()
-                    binding.motionContainer.removeView(binding.progressRecycler)
+//                    binding.motionContainer.removeView(binding.progressRecycler)
+                    binding.progressRecycler.visibility = View.GONE
                 }
             }
         }
@@ -45,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         binding.rvMain.adapter = videoAdapter
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
     private fun getVideo(): ListVideo? {
         val client = OkHttpClient.Builder()
