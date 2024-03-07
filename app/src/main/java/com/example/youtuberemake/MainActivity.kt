@@ -1,9 +1,10 @@
 package com.example.youtuberemake
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.youtuberemake.databinding.ActivityMainBinding
 import com.google.gson.GsonBuilder
@@ -20,17 +21,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var videoAdapter: VideoAdapter
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var view_layer: View
+    private lateinit var motion_container: MotionLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        view_layer = findViewById(R.id.view_layer)
+        motion_container = findViewById(R.id.motion_container)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
 
         val videos = mutableListOf<Video>()
         videoAdapter = VideoAdapter(videos) { video ->
-
+            showOverlayView(video)
         }
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -47,6 +54,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        view_layer.alpha = 0f
+
         binding.rvMain.layoutManager = LinearLayoutManager(this)
         binding.rvMain.adapter = videoAdapter
     }
@@ -54,6 +63,52 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun showOverlayView(video: Video) {
+        view_layer.animate().apply {
+            duration = 400
+            alpha(0.5f)
+        }
+
+        motion_container.setTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionTrigger(
+                motionLayout: MotionLayout?,
+                triggerId: Int,
+                positive: Boolean,
+                progress: Float
+            ) {
+//                println("Transition Trigger $triggerId $positive $progress")
+            }
+
+            override fun onTransitionStarted(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int
+            ) {
+//                println("Transition Started $startId $endId")
+            }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout?,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+                if (progress > 0.5f)
+                    view_layer.alpha = 1.0f - progress
+                else
+                    view_layer.alpha = 0.5f
+            }
+
+            override fun onTransitionCompleted(
+                motionLayout: MotionLayout?,
+                currentId: Int
+            ) {
+//                println("Transition Completed $currentId")
+            }
+
+        })
     }
 
     private fun getVideo(): ListVideo? {
