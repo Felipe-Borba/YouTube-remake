@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
                     videos.clear()
                     videos.addAll(listVideo.data)
                     videoAdapter.notifyDataSetChanged()
-//                    binding.motionContainer.removeView(binding.progressRecycler)
-                    binding.progressRecycler.visibility = View.GONE
+                    binding.motionContainer.removeView(binding.progressRecycler)
+//                    binding.progressRecycler.visibility = View.GONE
                 }
             }
         }
