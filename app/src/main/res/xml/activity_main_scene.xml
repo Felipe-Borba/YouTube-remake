@@ -4,7 +4,7 @@
 
     <Transition
         app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start"
+        app:constraintSetStart="@id/start"
         app:duration="300">
 
         <OnSwipe
@@ -13,6 +13,35 @@
             app:touchRegionId="@id/video_player" />
         <!--        <OnClick app:clickAction="toggle"-->
         <!--            app:targetId="@id/video_player" />-->
+
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                android:translationX="0dp"
+                app:framePosition="92"
+                app:motionTarget="@id/surface_player" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                android:translationX="0dp"
+                app:framePosition="92"
+                app:motionTarget="@id/video_player" />
+            <KeyAttribute
+                android:scaleX="1"
+                android:scaleY="1"
+                app:framePosition="92"
+                app:motionTarget="@id/video_player_title" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="95"
+                app:motionTarget="@id/video_cancel_button" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="95"
+                app:motionTarget="@id/video_play_button" />
+        </KeyFrameSet>
 
     </Transition>
 
@@ -166,7 +195,6 @@
             android:scaleX=".4"
             android:translationX="-111dp"
             app:layout_constraintBottom_toBottomOf="parent"
-
             app:layout_constraintDimensionRatio="17:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -190,5 +218,6 @@
 
 
     </ConstraintSet>
+
 
 </MotionScene>
