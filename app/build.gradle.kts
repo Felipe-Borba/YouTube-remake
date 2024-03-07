@@ -43,6 +43,18 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // load images url
+    implementation("com.squareup.picasso:picasso:2.71828")
+
+    //json parser
+    implementation("com.google.code.gson:gson:2.8.5")
+
+    //coroutines
+    val coroutines_version = "1.1.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
