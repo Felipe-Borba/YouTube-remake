@@ -65,6 +65,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<SeekBar>(R.id.seek_bar).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    youtubePlayer.seek(progress.toLong())
+                }
+            }
+        })
+
         preparePlayer()
     }
 
