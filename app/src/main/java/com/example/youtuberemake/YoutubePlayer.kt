@@ -46,12 +46,12 @@ class YoutubePlayer(private val context: Context) : SurfaceHolder.Callback {
                     .createMediaSource(MediaItem.fromUri(Uri.parse(url)))
 
             it.prepare(videoSource)
-//            it.addListener(object : Player.EventListener {
-//                override fun onIsPlayingChanged(isPlaying: Boolean) {
-//                    if (isPlaying)
-//                        trackTime()
-//                }
-//            })
+            it.addListener(object : Player.Listener {
+                override fun onIsPlayingChanged(isPlaying: Boolean) {
+                    if (isPlaying)
+                        trackTime()
+                }
+            })
             play()
         }
     }

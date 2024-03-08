@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTrackTime(currentPosition: Long, percent: Long) {
                 findViewById<SeekBar>(R.id.seek_bar).progress = percent.toInt()
                 findViewById<TextView>(R.id.current_time).text = currentPosition.formatTime()
-                println(currentPosition.formatTime())
             }
 
         }
