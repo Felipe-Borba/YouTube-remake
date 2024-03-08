@@ -20,10 +20,10 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <!--        <include-->
-        <!--            layout="@layout/video_detail_content"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent" />-->
+        <include
+            layout="@layout/video_detail_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -31,7 +31,7 @@
         android:id="@+id/video_player"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@android:color/holo_green_dark" />
+        android:src="@android:color/holo_red_dark" />
 
     <LinearLayout
         android:id="@+id/video_player_title"
@@ -61,13 +61,13 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo Ola mundo" />
+
     </LinearLayout>
 
     <SurfaceView
         android:id="@+id/surface_player"
         android:layout_width="0dp"
         android:layout_height="0dp" />
-
 
     <View
         android:id="@+id/view_frame"
@@ -214,7 +214,6 @@
         app:layout_constraintTop_toTopOf="@id/video_player"
         tools:alpha="1" />
 
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/video_play_button"
         android:layout_width="24dp"
@@ -235,4 +234,5 @@
         android:paddingEnd="0dp"
         app:layout_constraintBottom_toTopOf="@id/container_scroll"
         app:layout_constraintTop_toTopOf="@id/container_scroll" />
+
 </merge>
