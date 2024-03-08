@@ -2,8 +2,10 @@ package com.example.youtuberemake
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.SurfaceView
 import android.view.View
 import android.widget.ImageView
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -19,13 +21,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var videoAdapter: VideoAdapter
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var youtubePlayer: YoutubePlayer
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var view_layer: View
     private lateinit var motion_container: MotionLayout
 
@@ -63,12 +65,39 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        preparePlayer()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        youtubePlayer.release()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        youtubePlayer.pause()
+    }
+
+    private fun preparePlayer() {
+        youtubePlayer = YoutubePlayer(this)
+        youtubePlayer.youtubePlayerListener = object : YoutubePlayer.YoutubePlayerListener {
+            override fun onPrepared(duration: Int) {
+            }
+
+            override fun onTrackTime(currentPosition: Long, percent: Long) {
+                findViewById<SeekBar>(R.id.seek_bar).progress = percent.toInt()
+                findViewById<TextView>(R.id.current_time).text = currentPosition.formatTime()
+                println(currentPosition.formatTime())
+            }
+
+        }
+
+        findViewById<SurfaceView>(R.id.surface_player).holder.addCallback(youtubePlayer)
     }
 
     private fun showOverlayView(video: Video) {
@@ -116,6 +145,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         findViewById<ImageView>(R.id.video_player).visibility = View.GONE
+        youtubePlayer.setUrl(video.videoUrl)
 
         val detailAdapter = VideoDetailAdapter(videos())
         val rv_similar = findViewById<RecyclerView>(R.id.rv_similar)
